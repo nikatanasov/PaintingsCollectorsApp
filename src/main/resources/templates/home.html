@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/commons::head"></head>
+<body>
+<header th:replace="fragments/commons::nav"></header>
+<main>
+    <div class="welcome mt-1 mb-4">
+        <p th:text = "${'Welcome, ' + user.username}" class="mySticky bg-gray text-dark user">Welcome, mandarin</p>
+        <div class="row mt-1 mb-2">
+            <div class="col-6 mt-1 mb-1">
+                <div>
+                    <div class="home-fields" style="height: 40vh; overflow: auto">
+                        <h3 class="my-paintings">My Paintings</h3>
+                        <table class="table table-striped table-dark">
+                            <thead>
+                            <tr class="my-paintings">
+                                <th>Image</th>
+                                <th>Name</th>
+                                <th>Author</th>
+                                <th>Style</th>
+                                <th>Remove</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr th:each = "painting : ${myPaintings}" class="my-paintings">
+                                <td scope="row" style="width: 5%">
+                                    <img class="mr-2" th:src="${painting.imageUrl}" width="35px" height="35px">
+                                </td>
+                                <td th:text = "${painting.name}">Spring</td>
+                                <td th:text = "${painting.author}">Viktor</td>
+                                <td th:text = "${painting.style}">EXPRESSIONISM</td>
+                                <td style="width: 15%">
+                                    <form th:action="@{'/paintings/' + ${painting.id}}" th:method="DELETE">
+                                        <button class="btn-danger btn">Delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div>
+                    <div class="home-fields" style="height: 39vh; overflow: auto">
+                        <h3 class="my-paintings">My Favorites</h3>
+                        <table class="table table-striped table-dark">
+                            <tbody>
+                            <tr th:each = "painting : ${favouritePaintings}">
+                                <td>
+                                    <div class="img1">
+                                        <img th:src="${painting.imageUrl}" width="40px" height="40" style="padding-left: 0.3em;">
+                                    </div>
+                                </td>
+                                <td th:text = "${painting.name}">Mona Lisa</td>
+                                <td th:text = "${painting.author}">Some Author</td>
+                                <td th:text = "${#temporals.format(painting.createdOn, 'dd MMM YYYY HH:mm')}">2025-02-10T17:19:08.613321</td>
+                                <td>
+                                    <form th:action="@{'/paintings/favourites/' + ${painting.id}}" th:method="DELETE">
+                                        <button class="btn-danger btn">X</button>
+                                    </form>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-6 mt-1 mb-1">
+                <div class="home-fields" style="height: 58vh; overflow: auto">
+                    <h3 class="my-paintings">Other Paintings</h3>
+                    <ul class="list-group list-group-vertical text-dark">
+                        <li th:each = "painting : ${otherPaintings}">
+                            <div class="my-paintings-first-row">
+                                <div class="img1">
+                                    <img th:src="${painting.imageUrl}" width="75px" height="75" style="padding-top: 0.3em; padding-left: 0.3em; margin-top: 2.3em">
+                                </div>
+                                <p th:text = "${painting.name}">Mona Lisa</p>
+                                <p th:text = "${painting.author}">Some Author</p>
+                            </div>
+                            <div class="buttons-info">
+                                <div class="favorite">
+                                    <form th:action="@{'/paintings/favourites/' + ${painting.id}}" th:method="POST">
+                                        <button class="btn-info btn">Favourite</button>
+                                    </form>
+                                </div>
+                                <div class="rate">
+                                    <form th:action="@{'/paintings/rate/' + ${painting.id}}" th:method="POST">
+                                        <button class="btn-primary btn">Vote</button>
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="second-info">
+                                <p>Style: <span th:text = "${painting.style.name()}">IMPRESSIONISM</span></p>
+                                <p>Added by <span th:text = "${painting.owner.username}">viktor11</span></p>
+                            </div>
+                        </li>
+
+                    </ul>
+                </div>
+                <div class="home-fields" style="height: 21vh; overflow: auto">
+                    <h3 class="my-paintings">Most Rated Paintings</h3>
+                    <div class="most-rated">
+                        <div th:each = "painting : ${mostRatedPaintings}" class="rated-record">
+                            <p>Painting: <span th:text = "${painting.name}">Mona Lisa</span></p>
+                            <p>Votes: <span th:text = "${painting.votes}">2</span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<footer th:replace="fragments/commons::footer"></footer>
+</body>
+</html>

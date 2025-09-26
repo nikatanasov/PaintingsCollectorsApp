@@ -1,0 +1,16 @@
+/target/
+*.class
+*.log
+*.jar
+*.war
+*.iml
+/.idea/
+/.vscode/
+/.settings/
+/bin/
+/out/
+/.gradle/
+/mvnw
+mvnw.cmd
+.DS_Store
+Thumbs.db
