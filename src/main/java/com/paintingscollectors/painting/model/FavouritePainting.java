@@ -13,6 +13,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+//Class FavouritePainting
 public class FavouritePainting {
 
     @Id
